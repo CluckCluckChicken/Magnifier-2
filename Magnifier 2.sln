@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnifier 2", "Magnifier 2\Magnifier 2.csproj", "{7F102152-8F2B-4F9C-A867-08C630C08B6F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F102152-8F2B-4F9C-A867-08C630C08B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F102152-8F2B-4F9C-A867-08C630C08B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F102152-8F2B-4F9C-A867-08C630C08B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F102152-8F2B-4F9C-A867-08C630C08B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {090B77E7-7A06-4556-9C27-F19C2C920883}
+	EndGlobalSection
+EndGlobal
