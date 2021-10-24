@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnifier 2", "Magnifier 2\Magnifier 2.csproj", "{7F102152-8F2B-4F9C-A867-08C630C08B6F}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{F768C4FA-8F3B-455D-BA39-57CF6CFAABBF}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared\Shared.projitems*{7f102152-8f2b-4f9c-a867-08c630c08b6f}*SharedItemsImports = 5
+		Shared\Shared.projitems*{f768c4fa-8f3b-455d-ba39-57cf6cfaabbf}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

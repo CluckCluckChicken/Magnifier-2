@@ -1,16 +1,13 @@
+using Magnifier_2.Models;
+using Magnifier_2.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Magnifier_2
 {
@@ -26,6 +23,14 @@ namespace Magnifier_2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.Configure<Magnifier2Settings>(
+                Configuration.GetSection(nameof(Magnifier2Settings)));
+
+            services.AddSingleton(sp =>
+                sp.GetRequiredService<IOptions<Magnifier2Settings>>().Value);
+
+            services.AddSingleton<ReactionService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
