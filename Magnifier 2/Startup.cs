@@ -1,13 +1,19 @@
+using Magnifier_2.Attributes;
 using Magnifier_2.Models;
 using Magnifier_2.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-
+using Shared.Models.MongoDB;
+using Shared.Models.Universal;
+using System.Net;
+using System.Text;
 
 namespace Magnifier_2
 {
@@ -31,6 +37,9 @@ namespace Magnifier_2
                 sp.GetRequiredService<IOptions<Magnifier2Settings>>().Value);
 
             services.AddSingleton<ReactionService>();
+            services.AddSingleton<AuthCodeService>();
+            services.AddSingleton<UserService>();
+            services.AddSingleton<SessionService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -53,7 +62,49 @@ namespace Magnifier_2
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.Use(async (context, next) =>
+            {
+                Endpoint endpoint = context.Features.Get<IEndpointFeature>()?.Endpoint;
+                RequireAuthAttribute attribute = endpoint?.Metadata.GetMetadata<RequireAuthAttribute>();
+
+                if (attribute == null)
+                {
+                    await next();
+                    return;
+                }
+
+                if (context.Request.Headers.ContainsKey("sessionId"))
+                {
+                    string sessionId = context.Request.Headers["sessionid"];
+
+                    UserService userService = app.ApplicationServices.GetService<UserService>();
+                    SessionService sessionService = app.ApplicationServices.GetService<SessionService>();
+
+                    Session session = sessionService.Get(sessionId);
+
+                    Shared.Models.Universal.User user = userService.Get(session?.Username);
+
+                    if (user == null)
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        return;
+                    }
+
+                    if (attribute.AdminOnly && !user.IsAdmin)
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                        return;
+                    }
+
+                    context.User = new UserClaimsPrincipal(user);
+
+                    await next();
+                    return;
+                }
+
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                return;
+            });
 
             app.UseEndpoints(endpoints =>
             {

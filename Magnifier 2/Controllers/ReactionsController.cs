@@ -1,6 +1,8 @@
-﻿using Magnifier_2.Services;
+﻿using Magnifier_2.Attributes;
+using Magnifier_2.Services;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Universal;
+using System.Linq;
 
 namespace Magnifier_2.Controllers
 {
@@ -22,13 +24,21 @@ namespace Magnifier_2.Controllers
         }
 
         [HttpPut("{commentId}/{emoji}")]
+        [RequireAuth]
         public ActionResult PutReaction([FromRoute] int commentId, [FromRoute] string emoji)
         {
-            Reaction existingReaction = reactionService.Get(commentId, "potatophant", emoji);
+            User user = ((UserClaimsPrincipal)HttpContext.User).User;
+
+            if (!(Constants.EMOJIS.Contains(emoji) || user.IsAdmin || reactionService.Get(commentId, emoji) != null))
+            {
+                return Forbid("You don't have sufficient permissions to react with that emoji");
+            }
+
+            Reaction existingReaction = reactionService.Get(commentId, user.Username, emoji);
 
             if (existingReaction == null)
             {
-                reactionService.Create(new Reaction(commentId, "potatophant", emoji));
+                reactionService.Create(new Reaction(commentId, user.Username, emoji));
             }
             else
             {

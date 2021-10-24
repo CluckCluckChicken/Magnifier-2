@@ -46,6 +46,7 @@ namespace Magnifier_2.Services
         }
 
         public Reaction Get(int commentId, string username, string emoji) => reactions.Find(reaction => reaction.CommentId == commentId && reaction.Username == username && reaction.Emoji == emoji).FirstOrDefault();
+        public Reaction Get(int commentId, string emoji) => reactions.Find(reaction => reaction.CommentId == commentId && reaction.Emoji == emoji).FirstOrDefault();
 
         public Reaction Create(Reaction reaction)
         {
