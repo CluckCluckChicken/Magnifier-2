@@ -17,7 +17,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Universal\Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Universal\EmojiData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\MongoDB\Reaction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Universal\Project.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Universal\Reaction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Universal\ScratchUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Universal\Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Universal\Studio.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Universal\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Universal\UserClaimsPrincipal.cs" />
   </ItemGroup>

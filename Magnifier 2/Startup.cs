@@ -29,6 +29,16 @@ namespace Magnifier_2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "cors",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
 
             services.Configure<Magnifier2Settings>(
                 Configuration.GetSection(nameof(Magnifier2Settings)));
@@ -61,6 +71,8 @@ namespace Magnifier_2
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("cors");
 
             app.Use(async (context, next) =>
             {
