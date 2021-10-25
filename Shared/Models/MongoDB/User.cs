@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using Shared.Models.Universal;
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Shared.Models.MongoDB
@@ -25,6 +26,8 @@ namespace Shared.Models.MongoDB
 
         public DateTime LastLogin { get; set; }
 
+        public List<int> Stars { get; set; }
+
         [JsonConstructor]
         public User() { }
 
@@ -34,6 +37,8 @@ namespace Shared.Models.MongoDB
             Author = author;
 
             Created = DateTime.Now;
+
+            Stars = new List<int>();
         }
 
         public static implicit operator Universal.User(User input)
@@ -51,6 +56,7 @@ namespace Shared.Models.MongoDB
                 IsBanned = input.IsBanned,
                 Created = input.Created,
                 LastLogin = input.LastLogin,
+                Stars = input.Stars
             };
         }
     }
