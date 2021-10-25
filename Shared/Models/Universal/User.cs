@@ -18,8 +18,6 @@ namespace Shared.Models.Universal
 
         public DateTime LastLogin { get; set; }
 
-        public List<int> Stars { get; set; } // list of comment ids
-
         [JsonConstructor]
         public User() { }
 
@@ -29,8 +27,6 @@ namespace Shared.Models.Universal
             Author = author;
 
             Created = DateTime.Now;
-
-            Stars = new List<int>();
         }
 
         public static implicit operator MongoDB.User(User input)

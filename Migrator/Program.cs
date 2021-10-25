@@ -82,14 +82,14 @@ namespace Migrator
 
             foreach (Legacy.User legacy in inputUsers)
             {
-                outputUsers.Add(new Shared.Models.Universal.User()
+                outputUsers.Add(new Shared.Models.MongoDB.User()
                 {
                     Username = legacy.username,
                     Author = new Shared.Models.Universal.Author(legacy.username, legacy.scratchUser.image),
                     IsAdmin = legacy.isAdmin,
                     IsBanned = legacy.isBanned,
-                    Created = legacy.created,
-                    Stars = new List<int>()
+                    Created = legacy.created
+                    //Stars = new List<int>()
                 });
             }
 
