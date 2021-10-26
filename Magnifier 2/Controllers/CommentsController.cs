@@ -54,7 +54,7 @@ namespace Magnifier_2.Controllers
 
                 foreach (Comment reply in comment.Replies)
                 {
-                    reply.Content = Constants.MENTION_REGEX.Replace(reply.Content, mention => $"<a href=\"/users/${mention.Value.Substring(1)}\">{mention}</a>");
+                    reply.Content = Constants.MENTION_REGEX.Replace(reply.Content, mention => $"<a href=\"/users/{mention.Value.Substring(1)}\">{mention}</a>");
                 }
             }
 
