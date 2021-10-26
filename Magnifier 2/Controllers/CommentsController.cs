@@ -93,7 +93,7 @@ namespace Magnifier_2.Controllers
                 HtmlNode info = node.SelectSingleNode(".//div[@class=\"info\"]");
                 HtmlNode user = node.SelectSingleNode(".//a[@id=\"comment-user\"]");
                 Author author = new Author(info.SelectSingleNode(".//div[@class=\"name\"]").InnerText.Trim(), user.SelectSingleNode(".//img[@class=\"avatar\"]").Attributes["src"].Value);
-                Comment comment = new Comment(int.Parse(node.Attributes["data-comment-id"].Value), HttpUtility.HtmlDecode(info.SelectSingleNode(".//div[@class=\"content\"]").InnerText.Trim().Replace("\n      ", "")), DateTime.Parse(info.SelectSingleNode(".//span[@class=\"time\"]").Attributes["title"].Value), author);
+                Comment comment = new Comment(int.Parse(node.Attributes["data-comment-id"].Value), Constants.MENTION_REGEX.Replace(info.SelectSingleNode(".//div[@class=\"content\"]").InnerText.Trim().Replace("\n      ", ""), mention => $"<a href=\"/users/{mention.Value.Substring(1)}\">{mention}</a>"), DateTime.Parse(info.SelectSingleNode(".//span[@class=\"time\"]").Attributes["title"].Value), author);
 
                 if (!node.ParentNode.HasClass("reply"))
                 {
@@ -104,7 +104,7 @@ namespace Magnifier_2.Controllers
                             HtmlNode replyContainerInfo = replyContainer.SelectSingleNode(".//div[@class=\"info\"]");
                             HtmlNode replyContainerUser = replyContainer.SelectSingleNode(".//a[@id=\"comment-user\"]");
                             Author replyAuthor = new Author(replyContainerInfo.SelectSingleNode(".//div[@class=\"name\"]").InnerText.Trim(), replyContainerUser.SelectSingleNode(".//img[@class=\"avatar\"]").Attributes["src"].Value);
-                            Comment reply = new Comment(int.Parse(replyContainer.SelectSingleNode(".//div[@class=\"comment \"]").Attributes["data-comment-id"].Value), HttpUtility.HtmlDecode(replyContainerInfo.SelectSingleNode(".//div[@class=\"content\"]").InnerText.Trim().Replace("\n      ", "")), DateTime.Parse(replyContainerInfo.SelectSingleNode(".//span[@class=\"time\"]").Attributes["title"].Value), replyAuthor);
+                            Comment reply = new Comment(int.Parse(replyContainer.SelectSingleNode(".//div[@class=\"comment \"]").Attributes["data-comment-id"].Value), Constants.MENTION_REGEX.Replace(replyContainerInfo.SelectSingleNode(".//div[@class=\"content\"]").InnerText.Trim().Replace("\n      ", ""), mention => $"<a href=\"/users/{mention.Value.Substring(1)}\">{mention}</a>"), DateTime.Parse(replyContainerInfo.SelectSingleNode(".//span[@class=\"time\"]").Attributes["title"].Value), replyAuthor);
 
                             comment.Replies.Add(reply);
                         }
