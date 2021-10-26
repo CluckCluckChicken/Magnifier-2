@@ -48,7 +48,14 @@ namespace Magnifier_2.Controllers
 
             foreach (Comment comment in comments)
             {
+                comment.Content = Constants.MENTION_REGEX.Replace(comment.Content, mention => $"<a href=\"https://scratch.mit.edu/users/${mention.Value.Substring(1)}\">{mention}</a>");
+
                 comment.Replies = JsonSerializer.Deserialize<List<Comment>>(await client.GetStringAsync($"{url}/{comment.CommentId}/replies"));
+
+                foreach (Comment reply in comment.Replies)
+                {
+                    reply.Content = Constants.MENTION_REGEX.Replace(reply.Content, mention => $"<a href=\"https://scratch.mit.edu/users/${mention.Value.Substring(1)}\">{mention}</a>");
+                }
             }
 
             return Ok(comments);
