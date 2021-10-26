@@ -26,21 +26,20 @@ namespace Magnifier_2.Controllers
             return Ok(user.Stars);
         }
 
-        [HttpPut("{commentId}")]
+        [HttpPut]
         [RequireAuth]
-        public ActionResult ToggleStar(int commentId)
+        public ActionResult ToggleStar([FromBody] Comment comment)
         {
             User user = ((UserClaimsPrincipal)HttpContext.User).User;
 
-            if (user.Stars.Contains(commentId))
+            if (user.Stars.Find(c => c.CommentId == comment.CommentId) == null)
             {
-                user.Stars.Remove(commentId);
+                user.Stars.Add(comment);
             }
             else
             {
-                user.Stars.Add(commentId);
+                user.Stars.Remove(comment);
             }
-
 
             userService.Update(user.Username, user);
 

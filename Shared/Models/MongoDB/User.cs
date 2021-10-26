@@ -26,7 +26,7 @@ namespace Shared.Models.MongoDB
 
         public DateTime LastLogin { get; set; }
 
-        public List<int> Stars { get; set; }
+        public List<Comment> Stars { get; set; }
 
         [JsonConstructor]
         public User() { }
@@ -38,7 +38,7 @@ namespace Shared.Models.MongoDB
 
             Created = DateTime.Now;
 
-            Stars = new List<int>();
+            Stars = new List<Comment>();
         }
 
         public static implicit operator Universal.User(User input)
