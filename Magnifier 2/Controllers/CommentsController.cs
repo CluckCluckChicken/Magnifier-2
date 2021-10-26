@@ -48,14 +48,7 @@ namespace Magnifier_2.Controllers
 
             foreach (Comment comment in comments)
             {
-                comment.Content = comment.Content.Replace("<img src=\"/images/emoji/", "<img src=\"https://scratch.mit.edu/images/emoji/");
-
                 comment.Replies = JsonSerializer.Deserialize<List<Comment>>(await client.GetStringAsync($"{url}/{comment.CommentId}/replies"));
-
-                foreach (Comment reply in comment.Replies)
-                {
-                    reply.Content = reply.Content.Replace("<img src=\"/images/emoji/", "<img src=\"https://scratch.mit.edu/images/emoji/");
-                }
             }
 
             return Ok(comments);
