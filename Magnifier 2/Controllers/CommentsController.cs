@@ -48,14 +48,7 @@ namespace Magnifier_2.Controllers
 
             foreach (Comment comment in comments)
             {
-                comment.Content = HttpUtility.HtmlDecode(comment.Content);
-
                 comment.Replies = JsonSerializer.Deserialize<List<Comment>>(await client.GetStringAsync($"{url}/{comment.CommentId}/replies"));
-
-                foreach (Comment reply in comment.Replies)
-                {
-                    reply.Content = HttpUtility.HtmlDecode(reply.Content);
-                }
             }
 
             return Ok(comments);
