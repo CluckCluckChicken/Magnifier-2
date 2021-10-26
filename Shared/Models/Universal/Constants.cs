@@ -16,6 +16,6 @@ namespace Shared.Models.Universal
         public static readonly Regex URL_REGEX = new Regex("/(\b(https?):\\/\\/[-A-Z0-9+&@#/%?=~_|!:,.;]*scratch\\.mit\\.edu[-A-Z0-9+&@#/%=~_|]*)/ig", RegexOptions.IgnoreCase);
         public static readonly Regex MENTION_REGEX = new Regex(@"(?<=(^|[\s.,!])(?!\S*[:#]))[@|＠][A-Za-z0-9_-]{1,20}(?=(?:\b(?!@|＠)|$))", RegexOptions.IgnoreCase);
 
-        public static readonly MatchEvaluator MENTION_REGEX_EVALUATOR = mention => $"<a href=\"/users/{mention.Value.Substring(1)}\" onclick=\"location.href = \"/users/{mention.Value.Substring(1)}\"\">{mention}</a>";
+        public static readonly MatchEvaluator MENTION_REGEX_EVALUATOR = mention => $"<a href=\"/users/{mention.Value.Substring(1)}\" onclick=\"location.href = '/users/{mention.Value.Substring(1)}'\">{mention}</a>";
     }
 }
