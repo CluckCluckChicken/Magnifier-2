@@ -32,13 +32,15 @@ namespace Magnifier_2.Controllers
         {
             User user = ((UserClaimsPrincipal)HttpContext.User).User;
 
-            if (user.Stars.Find(c => c.CommentId == comment.CommentId) == null)
+            Comment existingComment = user.Stars.Find(c => c.CommentId == comment.CommentId);
+
+            if (existingComment == null)
             {
                 user.Stars.Add(comment);
             }
             else
             {
-                user.Stars.Remove(comment);
+                user.Stars.Remove(existingComment);
             }
 
             userService.Update(user.Username, user);
