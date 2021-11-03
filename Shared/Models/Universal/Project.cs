@@ -25,7 +25,7 @@ namespace Shared.Models.Universal
         [JsonPropertyName("loves")]
         public int Loves { get; set; }
 
-        [JsonPropertyName("favourites")]
+        [JsonPropertyName("favorites")]
         public int Favourites { get; set; }
 
         [JsonPropertyName("remixes")]
